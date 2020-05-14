@@ -1,3 +1,4 @@
+//defining routes
 module.exports = app => {
     const recipes = require("./controller")
     var router = require("express").Router();

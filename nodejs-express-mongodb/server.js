@@ -1,17 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const app = express();
 const PORT = 8080;
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
-
-app.use(cors(corsOptions));
+//parse request of content-type - application/json
 app.use(bodyParser.json());
+//parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//connect to Mongodb database
 const db = require("./app/models")
 db.mongoose
   .connect(db.url, {
@@ -26,6 +23,7 @@ db.mongoose
     process.exit()
   })
 
+//including routes to server
 require("./app/routes")(app)
 
 app.listen(PORT, () => {

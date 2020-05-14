@@ -1,3 +1,4 @@
+//defining Mongoose
 const dbConf = require("../db")
 const mongoose = require("mongoose")
 mongoose.Promise = global.Promise
