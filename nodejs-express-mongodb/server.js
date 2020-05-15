@@ -1,12 +1,20 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const app = express();
-const PORT = 8080;
+const express = require("express")
+const bodyParser = require("body-parser")
+const cors = require("cors")
+const app = express()
+const port = 8080
 
+//configure to allow only one origin to serve
+const corsOptions = {
+  origin: "http://localhost:8081"
+}
+
+//enables cors to respond to domain specified in corsOptions
+app.use(cors(corsOptions))
 //parse request of content-type - application/json
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 //parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
 
 //connect to Mongodb database
 const db = require("./app/models")
@@ -23,9 +31,9 @@ db.mongoose
     process.exit()
   })
 
-//including routes to server
+//including routes to server (app returns a function)
 require("./app/routes")(app)
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`)
+})

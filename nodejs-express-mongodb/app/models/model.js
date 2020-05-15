@@ -1,9 +1,10 @@
-//defining Mongoose model that represents recipes collection in db
 module.exports = mongoose => {
-    const schema = mongoose.Schema(
+    //defining Mongoose model that represents 'recipes'-collection
+    //in db and provides an interface to the db 
+    let schema = mongoose.Schema(
         {
             title: String,
-            ingredients: String,
+            ingredients: Array,
             instructions: String
         },
         {
@@ -11,10 +12,13 @@ module.exports = mongoose => {
         })
         //overriding toJSON method to map default obj to custom obj
         schema.method("toJSON", function() {
-            const { __v, _id, ...object } = this.toObject();
-            object.id = _id;
-            return object;
+            let { __v, _id, ...object } = this.toObject()
+            object.id = _id
+            return object
         })
-    const Recipe = mongoose.model("recipe", schema)
+    //mongoose instance, model constructor, name of collection
+    //and reference to schema set on variable, that export 
+    //fuction uses for a model to new objects
+    const Recipe = mongoose.model("recipes", schema)
     return Recipe
 }
