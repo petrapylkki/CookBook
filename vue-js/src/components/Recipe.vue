@@ -1,44 +1,56 @@
 <template>
   <div v-if="currentRecipe" class="edit-form">
-    <h4>Recipe</h4>
+    <h4>Edit the Recipe</h4>
     <form>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-          v-model="currentRecipe.title"
+        <input 
+        type="text" 
+        class="form-control" 
+        id="title"
+        v-model="currentRecipe.title"
         />
       </div>
       <div class="form-group">
         <label for="ingredients">Ingredients</label>
-        <input type="text" class="form-control" id="ingredients"
-          v-model="currentRecipe.ingredients"
+        <textarea
+        rows="4"
+        type="text" 
+        class="form-control" 
+        id="ingredients"
+        v-model="currentRecipe.ingredients"
         />
       </div>
       <div class="form-group">
         <label for="instructions">Instructions</label>
-        <input type="text" class="form-control" id="instructions"
-          v-model="currentRecipe.instructions"
+        <textarea
+        rows="3"
+        type="text" 
+        class="form-control" 
+        id="instructions"
+        v-model="currentRecipe.instructions"
         />
       </div>
     </form>
+    
+    <button type="submit" class="btn btn-success fix"
+      @click="updateRecipe">
+      Update
+    </button>
 
-    <button class="badge badge-danger mr-2"
-      @click="deleteRecipe"
-    >
+    <button class="btn btn-danger mr-2 fix"
+      @click="deleteRecipe">
       Delete
     </button>
 
-    <button type="submit" class="badge badge-success"
-      @click="updateRecipe"
-    >
-      Update
-    </button>
+    <a class="btn btn-secondary fix mr-2" href="/recipes">Cancel</a>
+
     <p>{{ message }}</p>
   </div>
 
   <div v-else>
     <br />
-    <p>Please click on a Recipe...</p>
+    <p>Click on a Recipe...</p>
   </div>
 </template>
 
@@ -95,8 +107,15 @@ export default {
 </script>
 
 <style>
+@media screen and (min-width: 800px) {
+  .edit-form {
+    width: 33em;
+  }
+}
 .edit-form {
-  max-width: 300px;
-  margin: auto;
+  text-align:left;
+}
+.fix {
+  float: right;
 }
 </style>

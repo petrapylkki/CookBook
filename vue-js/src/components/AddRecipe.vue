@@ -1,5 +1,6 @@
 <template>
   <div class="submit-form">
+    <h4>Add a Recipe</h4>
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
@@ -15,8 +16,9 @@
 
       <div class="form-group">
         <label for="ingredients">Ingredients</label>
-        <input
+        <textarea
           class="form-control"
+          rows="4"
           id="ingredients"
           required
           v-model="recipe.ingredients"
@@ -26,8 +28,9 @@
 
       <div class="form-group">
         <label for="instructions">Instructions</label>
-        <input
+        <textarea
           class="form-control"
+          rows="3"
           id="instructions"
           required
           v-model="recipe.instructions"
@@ -35,12 +38,13 @@
         />
       </div>
 
-      <button @click="saveRecipe" class="btn btn-success">Submit</button>
+      <button @click="saveRecipe" class="btn btn-success fix">Submit</button>
+      <a class="btn btn-secondary fix mr-2" href="/recipes">Cancel</a>
     </div>
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newRecipe">Add</button>
+      <button class="btn btn-success" @click="newRecipe">Add another Recipe</button>
     </div>
   </div>
 </template>
@@ -89,8 +93,15 @@ export default {
 </script>
 
 <style>
+@media screen and (min-width: 800px) {
+  .submit-form {
+    width: 33em;
+  }
+}
 .submit-form {
-  max-width: 300px;
-  margin: auto;
+  text-align:left;
+}
+.fix {
+  float: right;
 }
 </style>

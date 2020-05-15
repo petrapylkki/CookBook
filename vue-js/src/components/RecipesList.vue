@@ -1,19 +1,20 @@
 <template>
   <div class="list row">
-    <div class="col-md-8">
-      <div class="input-group mb-3">
+    <div class="col-md-6">
+      <div class="input-group mb-3 fix-searchbar">
         <input type="text" class="form-control" placeholder="Search by title"
           v-model="title"/>
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button"
+          <button class="btn btn-outline-info" type="button"
             @click="searchTitle">Search</button>
         </div>
       </div>
     </div>
+    <div class="col-md-2"></div>
     <div class="col-md-6">
       <h4>Recipe List</h4>
       <ul class="list-group">
-        <li class="list-group-item"
+        <li class="list-group-item list-group-item-action list-group-item-info"
           :class="{ active: index == currentIndex }"
           v-for="(recipe, index) in recipes"
           :key="index"
@@ -24,25 +25,27 @@
       </ul>
     </div>
     <div class="col-md-6">
-      <div v-if="currentRecipe">
-        <h4>Recipe</h4>
+      <div v-if="currentRecipe" class="card">
+          <h4>Recipe</h4>
         <div>
           <label><strong>Title:</strong></label> {{ currentRecipe.title }}
         </div>
         <div>
-          <label><strong>Ingredients:</strong></label> {{ currentRecipe.description }}
+          <label><strong>Ingredients:</strong></label>
+          <ul>
+            <li v-for="i in currentRecipe.ingredients" v-bind:key="i">{{ i }}</li>
+          </ul>
         </div>
         <div>
           <label><strong>Instructions:</strong></label> {{ currentRecipe.instructions }}
         </div>
-
-        <a class="badge badge-warning"
-          :href="'/recipes/' + currentRecipe.id"
-        >Edit</a>
+        <div class="row justify-content-end">
+          <a class="btn btn-info btn-sm fix-btn" :href="'/recipes/' + currentRecipe.id">Edit</a>
+        </div>
       </div>
       <div v-else>
         <br />
-        <p>Please click on a Recipe...</p>
+        <p style="margin-top:1rem;">Click on a recipe!</p>
       </div>
     </div>
   </div>
@@ -83,17 +86,6 @@ export default {
         this.currentRecipe = recipe;
         this.currentIndex = index;
     },
-
-    removeAllRecipes() {
-        DataService.deleteAll()
-            .then(response => {
-                console.log(response.data);
-                this.refreshList();
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    },
     
     searchTitle() {
         DataService.findByTitle(this.title)
@@ -116,7 +108,24 @@ export default {
 .list {
   text-align: left;
   float: left;
-  max-width: 800px;
-  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.fix-searchbar {
+  width: 100%;
+}
+.btn-outline-info {
+  background-color: white;
+}
+.fix-btn {
+  max-width: fit-content;
+  margin-right: 1rem;
+}
+.card {
+  border: 0.4px solid #bee5eb;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 35px;
 }
 </style>

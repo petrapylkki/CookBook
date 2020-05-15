@@ -20,5 +20,4 @@ class DataService {
         return http.get(`/recipes?title=${title}`);
     }
 }
-
 export default new DataService()
