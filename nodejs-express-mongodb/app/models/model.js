@@ -4,7 +4,7 @@ module.exports = mongoose => {
     let schema = mongoose.Schema(
         {
             title: String,
-            ingredients: Array,
+            ingredients: String,
             instructions: String
         },
         {
