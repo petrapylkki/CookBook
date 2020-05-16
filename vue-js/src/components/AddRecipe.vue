@@ -44,54 +44,48 @@
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newRecipe">Add another Recipe</button>
+      <a class="btn btn-info btn-sm" href="/recipes">Go back to homepage</a>
     </div>
   </div>
 </template>
 
 <script>
-import DataService from "../services/DataService";
+import DataService from "../services/DataService"
 
 export default {
-    name: "add-recipe",
-    data() {
-        return {
-            recipe: {
-                id: null,
-                title: "",
-                ingredients: "",
-                instructions: ""
-            },
-            submitted: false
-        };
-    },
-    methods: {
-        saveRecipe() {
-            const data = {
-                title: this.recipe.title,
-                ingredients: this.recipe.ingredients,
-                instructions: this.recipe.instructions
-            };
-
-            DataService.create(data)
-                .then(response => {
-                    this.recipe.id = response.data.id;
-                    console.log(response.data);
-                    this.submitted = true;
-                })
-                .catch(e => {
-                console.log(e);
-                });
-        },
-    
-        newRecipe() {
-            this.submitted = false;
-            this.recipe = {};
-        }
+  name: "add-recipe",
+  data() {
+    return {
+      recipe: {
+        id: null,
+        title: "",
+        ingredients: "",
+        instructions: ""
+      },
+        submitted: false
     }
-};
-</script>
+  },
+  methods: {
+    saveRecipe() {
+      const data = {
+        title: this.recipe.title,
+        ingredients: this.recipe.ingredients,
+        instructions: this.recipe.instructions
+      }
 
+    DataService.create(data)
+      .then(response => {
+        this.recipe.id = response.data.id
+        console.log(response.data)
+        this.submitted = true
+      })
+      .catch(e => {
+      console.log(e)
+      })
+    }
+  }
+}
+</script>
 <style>
 @media screen and (min-width: 800px) {
   .submit-form {

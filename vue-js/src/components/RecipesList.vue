@@ -1,5 +1,5 @@
 <template>
-  <div class="list row">
+  <div class="list row mx-auto">
     <div class="col-md-6">
       <div class="input-group mb-3 fix-searchbar">
         <input type="text" class="form-control" placeholder="Search by title"
@@ -26,21 +26,20 @@
     </div>
     <div class="col-md-6">
       <div v-if="currentRecipe" class="card">
-          <h4>Recipe</h4>
+          <div class="row justify-content-between">
+            <h4 style="margin-left:1rem;">Recipe</h4>
+            <a class="btn btn-info btn-sm fix-btn" :href="'/recipes/' + currentRecipe.id">Edit</a>
+          </div>
         <div>
           <label><strong>Title:</strong></label> {{ currentRecipe.title }}
         </div>
         <div>
           <label><strong>Ingredients:</strong></label>
-          <ul>
-            <li v-for="i in currentRecipe.ingredients" v-bind:key="i">{{ i }}</li>
-          </ul>
+          <p style="white-space: pre-line;">{{ currentRecipe.ingredients }}</p>
         </div>
         <div>
-          <label><strong>Instructions:</strong></label> {{ currentRecipe.instructions }}
-        </div>
-        <div class="row justify-content-end">
-          <a class="btn btn-info btn-sm fix-btn" :href="'/recipes/' + currentRecipe.id">Edit</a>
+          <label><strong>Instructions:</strong></label>
+          <p style="white-space: pre-line;">{{ currentRecipe.instructions }}</p>
         </div>
       </div>
       <div v-else>
@@ -50,60 +49,55 @@
     </div>
   </div>
 </template>
-
 <script>
-import DataService from "../services/DataService";
+import DataService from "../services/DataService"
 
 export default {
-    name: "recipes-list",
-        data() {
-            return {
-                recipes: [],
-                currentRecipe: null,
-                currentIndex: -1,
-                title: ""
-            };
-    },
+  name: "recipes-list",
+  data() {
+    return {
+      recipes: [],
+      currentRecipe: null,
+      currentIndex: -1,
+      title: ""
+    }
+  },
   methods: {
     retrieveRecipes() {
-        DataService.getAll()
-            .then(response => {
-                this.recipes = response.data;
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+      DataService.getAll()
+        .then(response => {
+          this.recipes = response.data
+          console.log(response.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     },
-
     refreshList() {
-        this.retrieveRecipes();
-        this.currentRecipe = null;
-        this.currentIndex = -1;
+      this.retrieveRecipes()
+      this.currentRecipe = null
+      this.currentIndex = -1
     },
-
     setActiveRecipe(recipe, index) {
-        this.currentRecipe = recipe;
-        this.currentIndex = index;
+      this.currentRecipe = recipe
+      this.currentIndex = index
     },
-    
     searchTitle() {
-        DataService.findByTitle(this.title)
-            .then(response => {
-                this.recipes = response.data;
-                console.log(response.data);
-            })
-            .catch(e => {
-                console.log(e);
-            });
+      DataService.findByTitle(this.title)
+        .then(response => {
+          this.recipes = response.data
+          console.log(response.data)
+        })
+        .catch(e => {
+          console.log(e)
+        })
     }
-},
-    mounted() {
-        this.retrieveRecipes();
-    }
-};
+  },
+  mounted() {
+    this.retrieveRecipes()
+  }
+}
 </script>
-
 <style>
 .list {
   text-align: left;
