@@ -1,5 +1,6 @@
 import http from "../http-common"
 
+//methods that use axios to make HTTP requests to the API
 class DataService {
     getAll() {
         return http.get("/recipes")

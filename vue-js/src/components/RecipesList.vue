@@ -18,8 +18,7 @@
           :class="{ active: index == currentIndex }"
           v-for="(recipe, index) in recipes"
           :key="index"
-          @click="setActiveRecipe(recipe, index)"
-        >
+          @click="setActiveRecipe(recipe, index)">
           {{ recipe.title }}
         </li>
       </ul>
@@ -31,7 +30,7 @@
             <a class="btn btn-info btn-sm fix-btn" :href="'/recipes/' + currentRecipe.id">Edit</a>
           </div>
         <div>
-          <label><strong>Title:</strong></label> {{ currentRecipe.title }}
+          <label><strong>Title:</strong></label>{{ currentRecipe.title }}
         </div>
         <div>
           <label><strong>Ingredients:</strong></label>
@@ -55,6 +54,7 @@ import DataService from "../services/DataService"
 export default {
   name: "recipes-list",
   data() {
+    //sets properties empty
     return {
       recipes: [],
       currentRecipe: null,
@@ -64,6 +64,8 @@ export default {
   },
   methods: {
     retrieveRecipes() {
+      //calls Dataservice.getAll() method and sets response
+      //to recipes array with error handling
       DataService.getAll()
         .then(response => {
           this.recipes = response.data
@@ -73,15 +75,19 @@ export default {
           console.log(e)
         })
     },
+    //refresh list to show no active recipe
     refreshList() {
       this.retrieveRecipes()
       this.currentRecipe = null
       this.currentIndex = -1
     },
+    //sets active recipe to show in the list
     setActiveRecipe(recipe, index) {
       this.currentRecipe = recipe
       this.currentIndex = index
     },
+    //calls DataService.findByTitle() method and sets 
+    //response to recipes array with error handling
     searchTitle() {
       DataService.findByTitle(this.title)
         .then(response => {
@@ -93,6 +99,7 @@ export default {
         })
     }
   },
+  //calls retrieveRecipes() method after DOM has been mounted
   mounted() {
     this.retrieveRecipes()
   }

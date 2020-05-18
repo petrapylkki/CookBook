@@ -1,6 +1,7 @@
 <template>
   <div class="submit-form">
     <h4>Add a Recipe</h4>
+    <!--shows div if form is unsubmitted-->
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
@@ -41,7 +42,7 @@
       <button @click="saveRecipe" class="btn btn-success fix">Submit</button>
       <a class="btn btn-secondary fix mr-2" href="/recipes">Cancel</a>
     </div>
-
+    <!--shows div after submit-->
     <div v-else>
       <h4>You submitted successfully!</h4>
       <a class="btn btn-info btn-sm" href="/recipes">Go back to homepage</a>
@@ -54,6 +55,7 @@ import DataService from "../services/DataService"
 
 export default {
   name: "add-recipe",
+  //initialize properties to be empty and unsubmitted 
   data() {
     return {
       recipe: {
@@ -66,22 +68,24 @@ export default {
     }
   },
   methods: {
+    //initialize properties with given data
     saveRecipe() {
       const data = {
         title: this.recipe.title,
         ingredients: this.recipe.ingredients,
         instructions: this.recipe.instructions
       }
-
-    DataService.create(data)
-      .then(response => {
-        this.recipe.id = response.data.id
-        console.log(response.data)
-        this.submitted = true
-      })
-      .catch(e => {
-      console.log(e)
-      })
+      //calls DataService.create() method and sets id
+      //to new recipe with error handling
+      DataService.create(data)
+        .then(response => {
+          this.recipe.id = response.data.id
+          console.log(response.data)
+          this.submitted = true
+        })
+        .catch(e => {
+        console.log(e)
+        })
     }
   }
 }

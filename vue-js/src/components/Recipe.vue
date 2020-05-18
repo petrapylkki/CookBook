@@ -1,6 +1,7 @@
 <template>
   <div v-if="currentRecipe" class="edit-form">
     <h4>Edit the Recipe</h4>
+    <!--shows div if form is unsubmitted-->
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
@@ -45,7 +46,6 @@
       <h4>You updated successfully!</h4>
       <a class="btn btn-info btn-sm" href="/recipes">Go back to homepage</a>
     </div>
-    <!--<p>{{ message }}</p>-->
   </div>
 </template>
 
@@ -55,14 +55,16 @@ import DataService from "../services/DataService"
 export default {
   name: "recipe",
   data() {
+    //initialize empty properties
     return {
       currentRecipe: null,
       submitted : false
-      //message: ''
     }
   },
   methods: {
     getRecipe(id) {
+      //calls DataService.get() method to set id 
+      //for currentRecipe with error handling
       DataService.get(id)
         .then(response => {
           this.currentRecipe = response.data
@@ -73,10 +75,11 @@ export default {
         })
     },
     updateRecipe() {
+      //calls DataService.update() method to set current id
+      //to the modified currentRecipe with error handling
       DataService.update(this.currentRecipe.id, this.currentRecipe)
         .then(response => {
           console.log(response.data)
-          //this.message = 'The recipe was updated successfully!'
           this.submitted = true
         })
         .catch(e => {
@@ -84,6 +87,8 @@ export default {
         })
     },
     deleteRecipe() {
+      //calls DataService.delete() method to delete currentRecipe
+      //with given id and then send client back to main page
       DataService.delete(this.currentRecipe.id)
         .then(response => {
           console.log(response.data)
@@ -94,8 +99,8 @@ export default {
         })
     }
   },
+  //calls getRecipe() method with set id after DOM has been mounted
   mounted() {
-    this.message = ''
     this.getRecipe(this.$route.params.id)
   }
 }

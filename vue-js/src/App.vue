@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!--defining navbar-->
     <nav class="navbar navbar-expand navbar-light bg-light shadow">
       <a href="#" class="navbar-brand">Cookbook</a>
       <div class="navbar-nav mr-auto">
@@ -11,7 +12,7 @@
         </li>
       </div>
     </nav>
-
+    <!--route outlet-->
     <div class="container mt-3">
       <router-view />
     </div>
