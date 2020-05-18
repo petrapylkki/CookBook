@@ -2,7 +2,7 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const app = express()
-const port = 8080
+const port = process.env.port || 8080
 
 //configure to allow only one origin to serve
 const corsOptions = {
